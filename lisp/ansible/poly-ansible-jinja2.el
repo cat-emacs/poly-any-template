@@ -65,7 +65,7 @@
 
 (defun poly-ansible-jinja2--marked-project-yaml-file-p (filename)
   "Return non-nil for YAML FILENAME in a standard project location."
-  (when-let ((root (poly-ansible-jinja2--project-root filename)))
+  (when-let* ((root (poly-ansible-jinja2--project-root filename)))
     (let ((relative-name (file-relative-name filename root)))
       (or (not (string-match-p "/" relative-name))
           (string-match-p "\\`tasks/" relative-name)))))

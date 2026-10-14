@@ -49,7 +49,7 @@
   "Call FUNCTION with ARGS using the parser matching the polymode span."
   (if (not (bound-and-true-p polymode-mode))
       (apply function args)
-    (when-let ((root (poly-treesit-fold--root-node)))
+    (when-let* ((root (poly-treesit-fold--root-node)))
       (let ((root-function (symbol-function 'treesit-buffer-root-node)))
         (cl-letf (((symbol-function 'treesit-buffer-root-node)
                    (lambda (&optional language tag)

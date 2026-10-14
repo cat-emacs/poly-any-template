@@ -64,7 +64,7 @@ through `treesit-primary-parser'."
 
 (defun poly-any-template--owned-primary-parser ()
   "Return a primary parser owned by the current inner buffer."
-  (when-let ((parser (poly-any-template--primary-parser)))
+  (when-let* ((parser (poly-any-template--primary-parser)))
     (unless (eq (treesit-parser-buffer parser) (current-buffer))
       (setq parser (poly-any-template--recreate-parser parser))
       (when (boundp 'treesit-primary-parser)
@@ -73,8 +73,8 @@ through `treesit-primary-parser'."
 
 (defun poly-any-template--set-inner-parser-ranges (&optional _type)
   "Limit the current inner buffer's parser to its template spans."
-  (when-let ((base-buffer (buffer-base-buffer))
-             (parser (poly-any-template--owned-primary-parser)))
+  (when-let* ((base-buffer (buffer-base-buffer))
+              (parser (poly-any-template--owned-primary-parser)))
     (save-excursion
       (let ((inner-buffer (current-buffer))
             ranges)
@@ -243,7 +243,7 @@ line and skip consecutive lines for which it returns non-nil."
                     (funcall preamble-line-p)))
         (forward-line 1)))
     (when (looking-at auto-mode-interpreter-regexp)
-      (when-let ((interpreter (match-string-no-properties 2)))
+      (when-let* ((interpreter (match-string-no-properties 2)))
         (catch 'mode
           (dolist (entry interpreter-mode-alist)
             (when (string-match-p
@@ -298,7 +298,7 @@ fontification after the initial Poly-lock setup."
 
 (defun poly-any-template--initialize-poly-lock (_type)
   "Initialize Poly-lock in an inner buffer when its base buffer requests it."
-  (when-let ((base-buffer (buffer-base-buffer)))
+  (when-let* ((base-buffer (buffer-base-buffer)))
     (when (buffer-local-value
            'poly-any-template--poly-lock-requested base-buffer)
       (poly-any-template--enable-poly-lock-in-current-buffer))))
@@ -335,7 +335,7 @@ fontification after the initial Poly-lock setup."
 Only `auto-mode-alist' is consulted, and the selected function is not run."
   (when filename
     (ignore-errors
-      (when-let ((mode (poly-any-template--auto-mode-for-file filename)))
+      (when-let* ((mode (poly-any-template--auto-mode-for-file filename)))
         (poly-any-template--remap-mode mode)))))
 
 (defun poly-any-template--activate
